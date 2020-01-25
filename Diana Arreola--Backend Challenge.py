@@ -4,6 +4,7 @@
 import random
 import os
 import math
+import sys
 import ufo as ufo
 
 # check number and characters
@@ -49,7 +50,7 @@ def validAnswer(dashed_codeword):
 def playAgain(user_input):
     if (user_input == "N") | (user_input == "n") | (user_input == "No") | (user_input == "NO")| (user_input == "no"):
         print('Goodbye')
-        return 0
+        sys.exit()
     elif (user_input == "Y") | (user_input == "y") | (user_input == "Yes") | (user_input == "yes") | (user_input == "YES"):
         print('Lets play again')
         return UFOGame()
@@ -145,7 +146,9 @@ def UFOGame():
 
         elif letter_guessed not in codeword:
             incorrect_guesses.append(letter_guessed)
-            chances_left,letter_guessed = incorrectGuess(chances_left, codeword, incorrect_guesses, guessed_codeword)
+            chances_left,letter_guessed = incorrectGuess(chances_left, codeword, incorrect_guesses, guessed_codeword) 
+            
+
             
             
     
