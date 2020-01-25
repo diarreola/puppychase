@@ -7,7 +7,8 @@ import math
 import sys
 import ufo as ufo
 
-# remove all print statements
+# you can only guess a letter once
+# remove all un print statements
 # clean code
 #  test code
 # check for rules of requiremnt
@@ -64,13 +65,13 @@ def checkInput(user_input):
 
     len_input = len(user_input)
     if len_input > 1:
-        print('Please only guess one letter')
+        print('Please only guess one letter.')
         return ' '
     elif user_input in intArr:
-        print('Please only guess letters not numbers')
+        print('Please only guess letters not numbers.')
         return ' '
     elif user_input in specialChars:
-        print('Please only guess letters not special characters')
+        print('Please only guess letters not special characters.')
         return ' '
     else:
         return user_input
@@ -130,7 +131,15 @@ def UFOGame():
     letter_guessed = letter_guessed.upper()
 
     while chances_left != 0:
-        if letter_guessed in codeword:
+        
+        if letter_guessed in guessed_codeword:
+            print("You can only guess that letter once, please try again.")
+            letter_guessed = input("Please enter your guess: ")
+            letter_guessed = checkInput(letter_guessed)
+            letter_guessed = letter_guessed.upper()  
+       
+        elif letter_guessed in codeword:
+
             guessed_codeword = addGuessedLetter(codeword, letter_guessed, guessed_codeword)
             
             # checks codeword is correct
@@ -146,14 +155,23 @@ def UFOGame():
                 print(guessed_codeword)
                 letter_guessed = input("Please enter your guess: ")
                 letter_guessed = checkInput(letter_guessed)
-                letter_guessed = letter_guessed.upper()     
+                letter_guessed = letter_guessed.upper() 
+                 
         elif letter_guessed in incorrect_guesses:
             print("Already Guessed That!")
             chances_left,letter_guessed = incorrectGuess(chances_left, codeword, incorrect_guesses, guessed_codeword)
 
-        elif letter_guessed not in codeword: 
-            incorrect_guesses.append(letter_guessed)
-            chances_left,letter_guessed = incorrectGuess(chances_left, codeword, incorrect_guesses, guessed_codeword) 
+        elif letter_guessed not in codeword:
+            if letter_guessed != ' ' and letter_guessed != '':
+
+                incorrect_guesses.append(letter_guessed)
+                chances_left,letter_guessed = incorrectGuess(chances_left, codeword, incorrect_guesses, guessed_codeword) 
+            else:
+                print("I cannot understand your input.")
+                letter_guessed = input("Please enter your guess: ")
+                letter_guessed = checkInput(letter_guessed)
+                letter_guessed = letter_guessed.upper()
+                
             
 
 UFOGame()
