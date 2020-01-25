@@ -7,7 +7,6 @@ import math
 import sys
 import ufo as ufo
 
-# check number and characters
 # remove all print statements
 # clean code
 #  test code
@@ -59,10 +58,19 @@ def playAgain(user_input):
         return 0
 
 def checkInput(user_input):
+    intArr = ['1','2','3','4','5','6','7','8','9','0']
+    specialChars = ['+', '-', '&', '|', '!', '(', ')', '{', '}', '[', ']', '^',
+                '~', '*', '?', ':', '/','<','>','.',',',';','$','%','*']
 
     len_input = len(user_input)
     if len_input > 1:
         print('Please only guess one letter')
+        return ' '
+    elif user_input in intArr:
+        print('Please only guess letters not numbers')
+        return ' '
+    elif user_input in specialChars:
+        print('Please only guess letters not special characters')
         return ' '
     else:
         return user_input
@@ -118,7 +126,7 @@ def UFOGame():
     print("Codeword: ")
     print(guessed_codeword)
     letter_guessed = input("Please enter your guess: ")
-    checkInput(letter_guessed)
+    letter_guessed = checkInput(letter_guessed)
     letter_guessed = letter_guessed.upper()
 
     while chances_left != 0:
@@ -138,20 +146,16 @@ def UFOGame():
                 print(guessed_codeword)
                 letter_guessed = input("Please enter your guess: ")
                 letter_guessed = checkInput(letter_guessed)
-                letter_guessed = letter_guessed.upper()
-                
+                letter_guessed = letter_guessed.upper()     
         elif letter_guessed in incorrect_guesses:
             print("Already Guessed That!")
             chances_left,letter_guessed = incorrectGuess(chances_left, codeword, incorrect_guesses, guessed_codeword)
 
-        elif letter_guessed not in codeword:
+        elif letter_guessed not in codeword: 
             incorrect_guesses.append(letter_guessed)
             chances_left,letter_guessed = incorrectGuess(chances_left, codeword, incorrect_guesses, guessed_codeword) 
             
 
-            
-            
-    
 UFOGame()
 
 
