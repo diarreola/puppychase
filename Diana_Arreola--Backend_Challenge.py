@@ -1,15 +1,11 @@
 # Codecademy Backend Challenge
-# CREATED BY: Diana Arreola
+# CREATED BY: Diana Arreolals
 import random
 import os
 import math
 import sys
+from array import array 
 import ufo as ufo
-
-
-#  unit test for helper + all
-# do bonus
-# readme
 
 def randomizeNoun():
     """ randomeizeNoun returns a random noun (str) from 
@@ -160,6 +156,81 @@ def wonGame(codeword):
     
     return playAgain(answer)
 
+def bonusWords(incorrect_guesses, guessed_codeword):
+    """ bonusWords displays how many words 
+        in the provided dictionary are potentially 
+        correct codewords given the correct and 
+        incorrect letter guesses made so far.
+        input: the codeword (str), the array of 
+                incorrect letters guessed (arr) 
+        output: string of possible correct codewords
+    """
+    len_codeword = len(guessed_codeword)
+    # array of wprd
+    with open("nouns.txt") as noun_file:
+        nouns = noun_file.read().split()
+    # first filter by codeword length
+    appropriate_length = list(filter(lambda x: len(x)==len_codeword,nouns))
+  
+    # initialize dictionary
+    appropriate_letters = {}
+    for word in appropriate_length:
+        appropriate_letters[word] = 0
+
+    # filter out incorrect letters using the incorrect guesses array
+    # from the appropriate length array
+    # Utilizing a dictionary to associate every word in appropriate length
+    # with a key value that represents the number of incorrect letters in it 
+    filtered_words = []
+    for i in incorrect_guesses:
+        for j in appropriate_length:
+            if i in j:
+                appropriate_letters[i] += 1
+    for i in appropriate_letters:
+        if appropriate_letters[i] == 0:
+            filtered_words.append(i)
+
+    # Find the char and index of the letters in
+    # the guessed codeword
+    letterAndIndex = findLetterAndIndex(guessed_codeword)
+    
+    # Find the possible bonus words
+    bonusWords = compareStrings(filtered_words, letterAndIndex)
+    print(' '.join(word for word in bonusWords))
+    return ' '.join(word for word in bonusWords)
+
+def findLetterAndIndex(guessed_codeword):
+    # gives letter and index of word
+    letter = {}
+    for i in range(len(guessed_codeword)):
+        if guessed_codeword[i] != '_':
+            letter[guessed_codeword[i]] = i
+    return letter
+
+def compareStrings(filtered_words, letterAndIndex):
+    
+    bonusWords = {} 
+    # initialize dictionary
+    for word in filtered_words:
+        bonusWords[word] = 0
+
+    for char in letterAndIndex:
+        print("char line 219", char)
+        for i in range(len(filtered_words)):
+            # print("line 221 filtered word", filtered_words[i])
+            # print("line 222 filtered word", filtered_words[i][letterAndIndex[char]])
+            # print("line 223 char in leyyer",char)
+            if filtered_words[i][letterAndIndex[char]].upper() == char:
+                bonusWords[filtered_words[i]] += 1 
+    letter_length = len(letterAndIndex)
+    bonus = []
+    for word in bonusWords:
+        if bonusWords[word] == letter_length:
+            bonus.append(word)
+    return bonus
+ 
+
+
 def UFOGame():
     """ UFO GAME returns a game for guessing a codeword 
         one letter at a time. If the letter does not 
@@ -211,7 +282,9 @@ def UFOGame():
                  
         elif letter_guessed in incorrect_guesses:
             print("Already Guessed That!")
-            chances_left,letter_guessed = incorrectGuess(chances_left, codeword, incorrect_guesses, guessed_codeword)
+            letter_guessed = input("Please enter your guess: ")
+            letter_guessed = checkInput(letter_guessed)
+            letter_guessed = letter_guessed.upper()
 
         elif letter_guessed not in codeword:
             if letter_guessed != ' ' and letter_guessed != '':
@@ -225,7 +298,8 @@ def UFOGame():
                 letter_guessed = letter_guessed.upper()
                 
 def main():
-  UFOGame()
+#   UFOGame()
+    bonusWords(['D'],'_R___')
   
 if __name__== "__main__":
   main()     
