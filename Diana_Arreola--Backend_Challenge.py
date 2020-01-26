@@ -4,7 +4,6 @@ import random
 import os
 import math
 import sys
-from array import array 
 import ufo as ufo
 
 def randomizeNoun():
@@ -44,6 +43,15 @@ def validAnswer(dashed_codeword):
             return False
     return True
 
+def userInput():
+    """ userInput returns the users input
+        output: user input (str)
+    """
+    letter_guessed = input("Please enter your guess: \n")
+    letter_guessed = checkInput(letter_guessed)
+    letter_guessed = letter_guessed.upper()
+    return letter_guessed
+
 def playAgain(user_input):
     """ playAgain either ends the game or restarts the game 
         based on the user input.
@@ -73,13 +81,13 @@ def checkInput(user_input):
 
     len_input = len(user_input)
     if len_input > 1:
-        print('Please only guess one letter.')
+        print('Please only guess one letter.\n')
         return ' '
     elif user_input in intArr:
-        print('Please only guess letters not numbers.')
+        print('Please only guess letters not numbers.\n')
         return ' '
     elif user_input in specialChars:
-        print('Please only guess letters not special characters.')
+        print('Please only guess letters not special characters.\n')
         return ' '
     else:
         return user_input
@@ -93,15 +101,15 @@ def correctGuess(chances_left, incorrect_guesses, guessed_codeword):
         output: chances left to play (str) and new letter guessed 
                 from user (str)
     """
-    print("Correct! You're closer to cracking the codeword.")
+    print("Correct! You're closer to cracking the codeword.\n")
     print(ufo.x[abs(chances_left-6)])
     print("Incorrect guesses: ")
     print(' '.join(letter for letter in incorrect_guesses))
     print("Codeword: ")
     print(guessed_codeword)
-    letter_guessed = input("Please enter your guess: ")
-    letter_guessed = checkInput(letter_guessed)
-    letter_guessed = letter_guessed.upper()
+    print("Number of dictionary matches:")
+    print(bonusWords(incorrect_guesses,guessed_codeword))
+    letter_guessed = userInput()
     return letter_guessed
 
 def incorrectGuess(chances_left, codeword, incorrect_guesses, guessed_codeword):
@@ -120,15 +128,15 @@ def incorrectGuess(chances_left, codeword, incorrect_guesses, guessed_codeword):
         return lostGame(codeword)
 
     # incorrect guess
-    print("Incorrect! The tractor beam pulls the person in further.")
+    print("Incorrect! The tractor beam pulls the person in further.\n")
     print(ufo.x[abs(chances_left-6)])
     print("Incorrect guesses: ")
     print(' '.join(letter for letter in incorrect_guesses))
     print("Codeword: ")
     print(guessed_codeword)
-    letter_guessed = input("Please enter your guess: ")
-    letter_guessed = checkInput(letter_guessed)
-    letter_guessed = letter_guessed.upper()
+    print("Number of dictionary matches:")
+    print(bonusWords(incorrect_guesses,guessed_codeword))
+    letter_guessed = userInput()
     return chances_left, letter_guessed
 
 def lostGame(codeword):
@@ -138,9 +146,9 @@ def lostGame(codeword):
         output: game ends or game restarts based on user 
         prefernce
     """
-    print("Incorrect! The tractor beam pulls you all the way in. You Lost.")
+    print("Incorrect! The tractor beam pulls you all the way in. You Lost.\n")
     print("The codeword is: ", codeword, ".")
-    answer = input("Would you like to play again (Y/N)?")
+    answer = input("Would you like to play again (Y/N)?\n")
     return playAgain(answer)
 
 def wonGame(codeword):
@@ -150,9 +158,9 @@ def wonGame(codeword):
         output: game ends or game restarts based on user 
         prefernce
     """
-    print("Correct! You saved the person and earned a medal of honor!")
+    print("Correct! You saved the person and earned a medal of honor!\n")
     print("The codeword is: ", codeword, ".")
-    answer = input("Would you like to play again (Y/N)?")
+    answer = input("Would you like to play again (Y/N)?\n")
     
     return playAgain(answer)
 
@@ -163,7 +171,8 @@ def bonusWords(incorrect_guesses, guessed_codeword):
         incorrect letter guesses made so far.
         input: the codeword (str), the array of 
                 incorrect letters guessed (arr) 
-        output: string of possible correct codewords
+        output: an integer which is the amount of matches
+                in the dict
     """
     len_codeword = len(guessed_codeword)
     # array of wprd
@@ -196,10 +205,18 @@ def bonusWords(incorrect_guesses, guessed_codeword):
     
     # Find the possible bonus words
     bonusWords = compareStrings(filtered_words, letterAndIndex)
-    print(' '.join(word for word in bonusWords))
-    return ' '.join(word for word in bonusWords)
+
+    return len(bonusWords)
 
 def findLetterAndIndex(guessed_codeword):
+    """ bonusWords displays how many words 
+        in the provided dictionary are potentially 
+        correct codewords given the correct and 
+        incorrect letter guesses made so far.
+        input: the guessed codeword (str) 
+        output: dict of correct guessed letters
+                associated with its index
+    """
     # gives letter and index of word
     letter = {}
     for i in range(len(guessed_codeword)):
@@ -208,18 +225,20 @@ def findLetterAndIndex(guessed_codeword):
     return letter
 
 def compareStrings(filtered_words, letterAndIndex):
-    
+    """ compareStrings is a helper function for bonus
+        words that compares the current guessed codeword
+        againt the pre-filtered words
+        input: an array of pre-filtered words (arr)
+              and dict of correct letter and index
+        output: an array of the possible dictionary matched
+    """
     bonusWords = {} 
     # initialize dictionary
     for word in filtered_words:
         bonusWords[word] = 0
 
     for char in letterAndIndex:
-        print("char line 219", char)
         for i in range(len(filtered_words)):
-            # print("line 221 filtered word", filtered_words[i])
-            # print("line 222 filtered word", filtered_words[i][letterAndIndex[char]])
-            # print("line 223 char in leyyer",char)
             if filtered_words[i][letterAndIndex[char]].upper() == char:
                 bonusWords[filtered_words[i]] += 1 
     letter_length = len(letterAndIndex)
@@ -229,8 +248,6 @@ def compareStrings(filtered_words, letterAndIndex):
             bonus.append(word)
     return bonus
  
-
-
 def UFOGame():
     """ UFO GAME returns a game for guessing a codeword 
         one letter at a time. If the letter does not 
@@ -250,24 +267,20 @@ def UFOGame():
     chances_left = 6
 
     #  initial display
-    print("UFO: The Game")
-    print("Instructions: save us from alien abduction by guessing letters in the codeword.")
+    print("UFO: The Game\n")
+    print("Instructions: save us from alien abduction by guessing letters in the codeword.\n")
     print(ufo.x[0])
     print("Incorrect guesses: ")
-    print("None")
+    print("None\n")
     print("Codeword: ")
-    print(guessed_codeword)
-    letter_guessed = input("Please enter your guess: ")
-    letter_guessed = checkInput(letter_guessed)
-    letter_guessed = letter_guessed.upper()
+    print(guessed_codeword,"\n")
+    letter_guessed = userInput()
 
     while chances_left != 0:
 
         if letter_guessed in guessed_codeword:
-            print("You can only guess that letter once, please try again.")
-            letter_guessed = input("Please enter your guess: ")
-            letter_guessed = checkInput(letter_guessed)
-            letter_guessed = letter_guessed.upper()  
+            print("You can only guess that letter once, please try again.\n")
+            letter_guessed = userInput()
        
         elif letter_guessed in codeword:
 
@@ -281,10 +294,8 @@ def UFOGame():
                 letter_guessed = correctGuess(chances_left, incorrect_guesses, guessed_codeword)
                  
         elif letter_guessed in incorrect_guesses:
-            print("Already Guessed That!")
-            letter_guessed = input("Please enter your guess: ")
-            letter_guessed = checkInput(letter_guessed)
-            letter_guessed = letter_guessed.upper()
+            print("Already Guessed That!\n")
+            letter_guessed = userInput()
 
         elif letter_guessed not in codeword:
             if letter_guessed != ' ' and letter_guessed != '':
@@ -292,14 +303,11 @@ def UFOGame():
                 incorrect_guesses.append(letter_guessed)
                 chances_left,letter_guessed = incorrectGuess(chances_left, codeword, incorrect_guesses, guessed_codeword) 
             else:
-                print("I cannot understand your input.")
-                letter_guessed = input("Please enter your guess: ")
-                letter_guessed = checkInput(letter_guessed)
-                letter_guessed = letter_guessed.upper()
+                print("I cannot understand your input.\n")
+                letter_guessed = userInput()
                 
 def main():
-#   UFOGame()
-    bonusWords(['D'],'_R___')
+  UFOGame()
   
 if __name__== "__main__":
   main()     
