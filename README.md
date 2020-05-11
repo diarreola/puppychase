@@ -15,7 +15,8 @@ To run the script: `python3 pupChase.py`
 
 Users will be able to see their incorrect guesses, progress on the codeword, and number of dictionary matches from noun.py based on the correctly/incorrectly guessed letters.
 
-![puppy chase](pupChase_img1.png)<!-- .element height="50%" width="50%" -->
+![puppy chase](pupChase_img1.png)
+<img src="pupChase_img1.png" width="48">
 ![puppy chaset](pupChase_img2.png )
 ![puppy chase](pupChase_img3.png )
 
