@@ -1,10 +1,9 @@
-# Codecademy Backend Challenge
 # CREATED BY: Diana Arreolals
 import random
 import os
 import math
 import sys
-import ufo as ufo
+import puppy as pup
 
 def randomizeNoun():
     """ randomeizeNoun returns a random noun (str) from 
@@ -63,7 +62,7 @@ def playAgain(user_input):
         sys.exit()
     elif (user_input == "Y") | (user_input == "y") | (user_input == "Yes") | (user_input == "yes") | (user_input == "YES"):
         print('Lets play again')
-        return UFOGame()
+        return pupChase()
     else:
         print('I did not understand you. Bye!')
         return 0
@@ -101,8 +100,8 @@ def correctGuess(chances_left, incorrect_guesses, guessed_codeword):
         output: chances left to play (str) and new letter guessed 
                 from user (str)
     """
-    print("Correct! You're closer to cracking the codeword.\n")
-    print(ufo.x[abs(chances_left-6)])
+    print("Correct! You're closer to guessing the codeword.\n")
+    print(pup.x[abs(chances_left-6)])
     print("Incorrect guesses: ")
     print(' '.join(letter for letter in incorrect_guesses))
     print("Codeword: ")
@@ -128,8 +127,8 @@ def incorrectGuess(chances_left, codeword, incorrect_guesses, guessed_codeword):
         return lostGame(codeword)
 
     # incorrect guess
-    print("Incorrect! The tractor beam pulls the person in further.\n")
-    print(ufo.x[abs(chances_left-6)])
+    print("Incorrect! The puppy inches closer to the fence.\n")
+    print(pup.x[abs(chances_left-6)])
     print("Incorrect guesses: ")
     print(' '.join(letter for letter in incorrect_guesses))
     print("Codeword: ")
@@ -146,7 +145,8 @@ def lostGame(codeword):
         output: game ends or game restarts based on user 
         prefernce
     """
-    print("Incorrect! The tractor beam pulls you all the way in. You Lost.\n")
+    print("Incorrect! The puppy escaped!\n")
+    print(pup.x[6])
     print("The codeword is: ", codeword, ".")
     answer = input("Would you like to play again (Y/N)?\n")
     return playAgain(answer)
@@ -156,9 +156,9 @@ def wonGame(codeword):
         user prefernce
         input: the codeword (str)
         output: game ends or game restarts based on user 
-        prefernce
+        preference
     """
-    print("Correct! You saved the person and earned a medal of honor!\n")
+    print("Correct! You saved your puppy!\n")
     print("The codeword is: ", codeword, ".")
     answer = input("Would you like to play again (Y/N)?\n")
     
@@ -248,17 +248,16 @@ def compareStrings(filtered_words, letterAndIndex):
             bonus.append(word)
     return bonus
  
-def UFOGame():
-    """ UFO GAME returns a game for guessing a codeword 
+def pupChase():
+    """ Puppy chase returns a game for guessing a codeword 
         one letter at a time. If the letter does not 
-        exist in the codeword, the person is pulled in 
-        closer to the UFO by the tractor beam. If the letter 
-        exists, the blanks that correspond to the position 
-        of those letters in the codeword are replaced by 
-        the letter. If all the letters of the codeword 
-        are revealed before the person is pulled into the 
-        UFO, you win. Otherwise, the UFO abducts the person 
-        and you lose.
+        exist in the codeword, the puppy is runs closer to
+        the fence. If the letter exists, the blanks that 
+        correspond to the position of those letters in the 
+        codeword are replaced by the letter. If all the 
+        letters of the codeword are revealed before the 
+        puppy escapes under the fence, you win. Otherwise, 
+        puppy escapes under the fence. 
     """
     codeword = randomizeNoun()
     len_codeword = len(codeword)
@@ -267,9 +266,9 @@ def UFOGame():
     chances_left = 6
 
     #  initial display
-    print("UFO: The Game\n")
-    print("Instructions: save us from alien abduction by guessing letters in the codeword.\n")
-    print(ufo.x[0])
+    print("Puppy Chase\n")
+    print("Instructions: Get you puppy before it escapes under the fence by guessing letters in the codeword.\n")
+    print(pup.x[0])
     print("Incorrect guesses: ")
     print("None\n")
     print("Codeword: ")
@@ -307,7 +306,7 @@ def UFOGame():
                 letter_guessed = userInput()
                 
 def main():
-  UFOGame()
+  pupChase()
   
 if __name__== "__main__":
   main()     
