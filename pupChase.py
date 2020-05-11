@@ -267,7 +267,7 @@ def pupChase():
 
     #  initial display
     print("Puppy Chase\n")
-    print("Instructions: Get you puppy before it escapes under the fence by guessing letters in the codeword.\n")
+    print("Instructions: Get your puppy before it escapes under the fence by guessing letters in the codeword.\n")
     print(pup.x[0])
     print("Incorrect guesses: ")
     print("None\n")
