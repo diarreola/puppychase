@@ -8,7 +8,7 @@ You will need to install python 3.7 to run this program.
 
 ### Running the Script
 On the terminal, cd into the file directory of the program.
-To run the script: `python3 Diana_Arreola--Backend_Challenge.py`
+To run the script: `python3 pupChase.py`
 
 ## Built With
 
