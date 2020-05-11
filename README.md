@@ -11,12 +11,13 @@ You will need to install python 3.7 to run this program.
 On the terminal, cd into the file directory of the program.
 To run the script: `python3 pupChase.py`
 
-## Video Walkthrough 
+## Image Walkthrough 
 
-Users will be able to see their incorrect guesses:
+Users will be able to see their incorrect guesses, progress on the codeword, and number of dictionary matches from noun.py based on the correctly/incorrectly guessed letters.
 
-<img src='http://g.recordit.co/t7krnTOq7t.gif' />
-<img src='http://g.recordit.co/QiMaiEHYF5.gif' />
+![puppy chase]()
+![puppy chaset]()
+![puppy chase]()
 
 ## Built With
 
