@@ -1,6 +1,6 @@
 # Puppy Chase
 
-Guess one letter at a time of a codeword, represented by blank placeholders for each letter, to catch your puppy before it escapes.
+Guess one letter at a time of a codeword, represented by blank placeholders for each letter, to catch your puppy before it escapes under your fence.
 
 ### Prerequisites
 
