@@ -1,4 +1,4 @@
-# CREATED BY: Diana Arreolals
+# CREATED BY: Diana Arreola
 import random
 import os
 import math
